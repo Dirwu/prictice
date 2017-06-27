@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>test age</title>
+	</head>
+	<style>
+	.inputDate input{
+		margin-bottom: 20px;
+		width: 60px;
+		height: 20px;
+		text-align: center;
+		display: inline-block;
+	}
+	.test input{
+		width: 40px;
+		height: 30px;
+	}
+	.inputDate:after{
+		content: "请输入1900年后的年份";
+		margin-bottom: 10px;
+		display: inline-block;
+		color: red;
+		height: 20px;
+	}	
+	</style>
+	<body>
+		<div class="inputDate">
+			<input type="number" id="years"  min="1900" max="2017" placeholder="1995" />年
+			<input type="number" id="mounths" min="1" max="12" placeholder="1"/>月
+			<input type="number" id="days" min="1" max="31" placeholder="1"/>日
+		</div>
+		<div class="test"><input type="button" value="测试" onclick="Test()" /></div>
+		<div id="testAge"></div>
+	<script>
+		function Test(){
+			//获取输入日期
+			var inp =document.getElementsByTagName("input");
+			var y0 = document.getElementById("years").value;
+			var m0 = document.getElementById("mounths").value;
+			var d0 =document.getElementById("days").value;
+			
+			//获取当前日期
+			var getD = new Date;
+			var y1 = getD.getFullYear();
+			var m1 = getD.getMonth();
+			var d1 = getD.getDate();
+			
+			
+			//输入不能为空
+			if(y0===""){
+				alert("请输入出生年份");
+			}else if(m0===""){
+				alert("请输入出生月份");
+			}else if(d0===""){
+				alert("请输入出生日期");
+			}
+			
+			//计算年份
+			var y=y1-y0-1;
+			var Y0=[];
+			var Y1=[];
+			for(var i =y0;i<y1+1;i++){
+			Y0.push(i);	
+			}
+			//找出闰年
+			Y0.forEach(function(item,index){
+				if(item%4===0){
+					Y1.push(item);
+				}
+			})
+            
+            //计算天数
+            var d;			
+            if(m0==1||m0==3||m0==5||m0==7||m0==8||m0==10||m0==12){
+            	d =31-d0+d1;
+            }else if(m0==4||m0==6||m0==9||m0==11){
+            	d =30-d0+d1;
+            }else if(m0==2){
+            	d =28-d0+d1;
+            }
+            
+            //天数加上闰年数
+            d = d+Y1.length;
+            	
+            //超过30天累加月数
+            if(d>=30){
+				d=d-30;
+				m++;
+			}
+            
+            //超过12个月累加年数
+			var m =12-m0+m1+1;
+			if(m>=12){
+				m=m-12;
+				y++;
+			}
+			
+			//判断年份，小于1900年大于本年提示错误
+			if(y0>1900 && y0<y1+1 && m0>0 &&m0<13 && d0 >0 && d0<32){
+			creatAges();	
+			}else if(y0<=1900 && y0!="" && m0!="" && d0!=""){
+				alert("小伙子没这么老吧");
+			}else if(y0<0 && y0>0 &&y0!="" && m0!="" && d0!=""){
+				alert("小伙子没这么老吧！");
+			}else if(y0>y1 && y0!="" && m0!="" && d0!=""){
+				alert("小伙子你穿越过来的？");
+			}
+			
+			//输出活的时长
+			function creatAges(){
+				//添加节点
+			var showAges=document.createElement("p");
+			    showAges.className = "p1";
+            var ages=document.createTextNode("你已经活了"+y+"年"+m+"个月"+d+"天,嗯，坚持活下去哦");
+            showAges.appendChild(ages);
+            /*使用innerHTML代替dom操作
+             *var showAges=document.createElement("p");
+             * showAges.innerHTML= "'你已经活了'+y+'年'+m+'个月'+'d'+'天'";
+             * 
+             */
+            var element=document.getElementById("testAge");
+            element.appendChild(showAges);	
+			}
+			
+			//重新测试删除节点，目前没做完
+			var element = document.getElementById("testAge");
+			var count = element.getElementsByTagName("p");	
+			element.removeChild(count);
+			
+			/*
+			 * 代码64行，闰年判断方式，如果末尾年份为00，如1900年，要除以400才能判断
+			 * 代码79行，判断多少个月还有瑕疵，这里默认每月30天
+			 * 代码114行，每次重新测试删除旧的元素节点，目前没有完成
+			 * 
+			 */
+		}
+	</script>
+	</body>
+</html>
