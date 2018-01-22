@@ -6,6 +6,7 @@ var dataObj = function(){
 	this.aimNum =0;//小鱼不同阶段果实卫喂食数量
 	this.double = 1;//果实亚瑟控制，黄色为1，蓝色为2
 	this.gameOver = false;
+	this.win = false;
 	this.alpha = 0;
 }
 dataObj.prototype.reset = function(){
@@ -29,10 +30,8 @@ dataObj.prototype.addScore = function(){
 	}else if(this.score>5000&&this.score<10000){
 	this.aimNum =6;
 	}else if(this.score>=10000){
-	ctx1.save();
-	ctx1.fillStyle = "rgba(255,255,255,"+this.alpha+")";
-    ctx1.fillText("WINNER",w*0.5,h*0.5);
-    ctx1.restore();
+	this.aimNum = 0;
+	this.win = true;
 	}
 }
 dataObj.prototype.draw = function(){
@@ -54,7 +53,7 @@ dataObj.prototype.draw = function(){
 	ctx1.shadowBlur = 10;
 	ctx1.shadowColor = "white";
 	ctx1.font = "24px Verdana";	
-	if(this.gameOver){
+	if(this.gameOver&&!this.win){
 		this.alpha += deltaTime *0.001;
 		if(this.alpha>1){
 			this.alpha=1;
@@ -65,5 +64,18 @@ dataObj.prototype.draw = function(){
 		
 	}
 	ctx1.restore();
+	if(this.score>=10000){
+	ctx1.save();
+	ctx1.shadowBlur = 10;
+	ctx1.shadowColor = "white";
+	ctx1.font = "36px Verdana";	
 	
+		this.alpha += deltaTime *0.001;
+		if(this.alpha>1){
+			this.alpha=1;
+		}
+	ctx1.fillStyle = "rgba(255,255,255,"+1+")";
+    ctx1.fillText("WINNER",w*0.5,h*0.5);
+    ctx1.restore();
+	}
 }

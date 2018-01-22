@@ -1,6 +1,6 @@
 function momFruitCollsion(){
 	// gameover or not?
-	if(!data.gameOver){
+	if(!data.gameOver||data.win){
 	   for(var i =0;i<fruit.num;i++){
 		 if(fruit.alive[i]&&fruit.l[i]>=14){
 			var l = calLength2(fruit.x[i], fruit.y[i], mom.x, mom.y);
@@ -42,7 +42,7 @@ function momFruitCollsion(){
 
 // mom feed baby
 function momBabyCollsion(){
-	if(!data.gameOver){
+	if(!data.gameOver||data.win){
 	    var  l = calLength2(baby.x, baby.y, mom.x, mom.y);
 		  if(l<900&&data.Num>=data.aimNum){
 		  //recover

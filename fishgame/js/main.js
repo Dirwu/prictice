@@ -160,7 +160,7 @@ function gameloop(){
 }
 function OnMouseMove(e){
 	
-		if(e.offsetXetX||e.layerX&&!data.gameOver){
+		if(e.offsetXetX||e.layerX||data.win&&!data.gameOver){
 	  	mx = e.offsetX == undefined?e.layerX:e.offsetX;
 	  	my = e.offsetY == undefined?e.layerY:e.offsetY;
 	  	
