@@ -22,13 +22,13 @@ dataObj.prototype.addScore = function(){
 		this.score += this.orangeFruitNum *20+this.blueFruitNum*40;
 	}
 	//aim fruitNum
-	if(this.score<=1000&&this.aimNum>=0){
+	if(this.score<=1000&&this.score>=0){
 	this.aimNum = 2;
-	}else if(this.num>=1000&&this.aimNum<5000){
+	}else if(this.score>=1000&&this.score<5000){
 	this.aimNum = 4;
-	}else if(this.aimNum>5000&&this.aimNum<10000){
+	}else if(this.score>5000&&this.score<10000){
 	this.aimNum =6;
-	}else if(this.Num>=10000){
+	}else if(this.score>=10000){
 	ctx1.save();
 	ctx1.fillStyle = "rgba(255,255,255,"+this.alpha+")";
     ctx1.fillText("WINNER",w*0.5,h*0.5);
